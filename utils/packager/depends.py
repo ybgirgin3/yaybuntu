@@ -1,4 +1,5 @@
 from utils.extra import read
+import subprocess
 import tempfile
 import os
 
@@ -17,6 +18,8 @@ def find_dep(path: str = '/path/to/repo'):
   if len(deps): # if list is not empty
     for dep in deps:
       os.system(f"apt list --installed | grep {dep} > {installed_pac}")
+      #subprocess.run(["apt", "list", "--installed", "grep", dep, ">", installed_pac])
+
     
     #for dep in deps:
       #process = subprocess.Popen(['apt', 'list', '--installed', '|', 'grep', f'{dep}'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
