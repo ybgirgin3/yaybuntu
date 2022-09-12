@@ -27,7 +27,7 @@ def download(deps: list, makedeps: list) -> list or bool:
   def _process(pkg):
     p_codes = []
     if len(isInstalled(pkg)) > 0:
-      cmd = f"{ubuntu_download_command} {dep}"
+      cmd = f"{ubuntu_download_command} {pkg}"
       logger(f"Running command: {cmd}")
       process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
       process.wait
