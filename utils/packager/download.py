@@ -21,7 +21,7 @@ def isInstalled(pkg: str, installation_folder: str = '/usr/bin') -> list:
   
 
 
-def download(deps: list, makedeps: list) -> list | bool:
+def download(deps: list, makedeps: list) -> list or bool:
   "download deps"
 
   def _process(pkg):
