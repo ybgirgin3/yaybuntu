@@ -29,6 +29,7 @@ def download(deps: list, makedeps: list) -> list or bool:
     if len(isInstalled(pkg)) > 0:
       cmd = f"{ubuntu_download_command} {pkg}"
       logger(f"Running command: {cmd}")
+      # TODO: still not sure about how to install packages using chrome
       process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
       process.wait
       p_codes.append(process.returncode)
