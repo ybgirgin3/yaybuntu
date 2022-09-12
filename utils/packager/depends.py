@@ -17,12 +17,11 @@ installed_pac = os.path.join(_tmp_file, _installed)
 def find_dep(path: str = '/path/to/repo') -> list:
   "find dependecies of package"
   logger(f"path in find_dep: {path}")
-  pkg = f"{path}/PKGBUILD"
-  content = read.read(pkg)                                      # read package
-  deps = [dep.strip() for dep in content if 'makedep' in dep]   # extract deps
-  if len(deps): # if list is not empty
-    for s in deps:
-      deps = s[s.find("(")+1:s.find(")")]
+  pkg = f"{path}/.SRCINFO"
 
-  return deps
+  content = read.read(pkg) # read all content
+  deps = content["depends"]
+  makedeps = content["makedepends"]
+
+  return deps, makedeps
 
