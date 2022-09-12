@@ -11,14 +11,14 @@ def packager(path: str = PATH,                    # source dir
   
 
   source_p = path["source"]
-  _plist = [] # list of new dirs
+  # _plist = [] # list of new dirs
 
   for pac in package_name:      # create package folders for each package name
     _p = f"{source_p}/{pac}"    # create dir query
     os.system(f"mkdir -p {_p}")
     cloned_path = clone.clone(url, pac, _p)  # start the clonning process
-    deps = depends.find_dep(cloned_path)  # find depends as str
-    cmd_status = download.download(deps)
+    deps, makedeps = depends.find_dep(cloned_path)  # find depends as str
+    cmd_status = download.download(deps, makedeps)
     print("command status: ", cmd_status)
 
 
