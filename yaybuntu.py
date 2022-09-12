@@ -1,5 +1,4 @@
-from utils.packager import packager
-import os
+from utils import packager
 import argparse
 
 
