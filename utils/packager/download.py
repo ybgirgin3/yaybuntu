@@ -8,7 +8,7 @@ ubnt_install = args()["install"]          # install command
 
 
 def run_as_sudo(sudo_user=os.getlogin(),
-                cmd_str=None,
+                cmd_str:list =None,
                 shell=False,
                 timeout=None):
 
@@ -22,6 +22,7 @@ def run_as_sudo(sudo_user=os.getlogin(),
       return subprocess.run(cmd_array, shell=shell, timeout=timeout)
 
     # run command
+    print("ret: ", sudo_args + cmd_str.split())
     r = run_cmd(sudo_args + cmd_str.split(), shell=shell, timeout=timeout)
     return r
 
