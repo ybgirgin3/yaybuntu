@@ -1,4 +1,5 @@
 import os
+import pty
 import subprocess
 from utils.logger import logger
 from utils.extra import is_installed
@@ -8,17 +9,27 @@ ubnt_install = args()["install"]          # install command
 
 
 def _command_run(pkg):
-  proc = subprocess.Popen(['sudo', 'apt', 'install', f'{pkg}'],
-                          stdin=subprocess.PIPE,
-                          stdout=subprocess.PIPE,
-                          stderr=subprocess.PIPE).communicate(input=b'password\n')
-  print("proc: ", proc)
+  cmd = "sudo apt install %s " % (pkg)
+
+  def reader(fd):
+    return os.read(fd)
+  def writer(fd):
+    yield 'password'
+    yield ''
+
+  pty.spawn(cmd, reader, writer)
+
+  
+
+
+  # proc = subprocess.Popen(['sudo', 'apt', 'install', f'{pkg}'],
+  #                         stdin=subprocess.PIPE,
+  #                         stdout=subprocess.PIPE,
+  #                         stderr=subprocess.PIPE).communicate(input=b'password\n')
+  # print("proc: ", proc)
 
   #subprocess.Popen(["sudo", "apt", "install", f"{pkg}"])
-  
-
-
-  
+ 
 
 def download(deps: list, mkdeps: list):
   "download deps"
@@ -54,8 +65,6 @@ def download(deps: list, mkdeps: list):
       
   _download_proc(dep_installation_q, make_dep_installation_q)
 
-
-        
-    #return dep_installation_q, make_dep_installation_q
+  #return dep_installation_q, make_dep_installation_q
 
 
