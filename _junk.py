@@ -4,6 +4,6 @@ import os
 
 
 deps, makedeps = depends.find_dep(path=f"{os.path.expanduser('~')}/.yaybuntu/btop")
-# ret = download.download(deps, makedeps)
-ret = download.isInstalled('btop')
+ret = download.download(deps, makedeps)
+#ret = download.isInstalled('btop')
 print(ret)
