@@ -1,48 +1,45 @@
 import os
-import subprocess
-
 from utils.logger import logger
+from utils.extra import is_installed
+from utils.config import args
 
-ubuntu_download_command = "sudo apt install"
+def _download_proc(deps, mkdeps):
+  deps = deps if len(deps) else None        # define none if len is 0
+  mkdeps = mkdeps if len(mkdeps) else None  # define none if len is 0
+  ubnt_install = args()["install"]          # install command
 
-def isInstalled(pkg: str, installation_folder: str = '/usr/bin') -> list:
-  q = []
-  for installed_apps in os.listdir(installation_folder):
-    if pkg == installed_apps:
-      logger(f"{pkg} package already installed.. passing..")
-    else:
-      logger(f"{pkg} added to installation queue..", 'warning')
-      q.append(pkg)
-
-  return q
+  # * install deps
+  if deps is not None:
+    for dep in deps:
+      cur_cmd = f"{ubnt_install} {dep}"
+      os.system(cur_cmd)
 
 
-def download(deps: list, makedeps: list) -> list or bool:
-  "download deps"
-
-  def _process(pkg):
-    p_codes: list  = []  # status codes for terminal command
-    installation_q: list = isInstalled(pkg)
-
-    if len(installation_q) > 0:
-      cmd = f"{ubuntu_download_command} {pkg}"
-      logger(f"Running command: {cmd}")
-      # TODO: still not sure about how to install packages using chrome
-      process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-      process.wait
-      p_codes.append(process.returncode)
-      return p_codes
-
-    else:
-      logger("no package found to installation queue")
-      return True
+  if mkdeps is not None:
+    for mk in mkdeps:
+      cur_cmd = f"{ubnt_install} {mk}"
+      os.system(cur_cmd)
 
 
 
-  for dep in deps:  # look for deps
-    _process(dep)
-  for mkdep in makedeps:  # look for makedeps
-    _process(mkdep)
+  
 
+def download(deps: list, mkdeps: list):
+    "download deps"
+    dep_installation_q = []
+    make_dep_installation_q = []
+
+    for dep in deps:
+      isExists = is_installed.is_installed(dep)  # control if pkg is installed
+      if not isExists and dep not in dep_installation_q:
+        dep_installation_q.append(dep)
+
+    for mk in mkdeps:
+      isExists = is_installed.is_installed(mk)  # control if pkg is installed
+      if not isExists and mk not in dep_installation_q:
+        make_dep_installation_q.append(mk)
+
+        
+    return dep_installation_q, make_dep_installation_q
 
 

@@ -1,9 +1,9 @@
-from utils.config import paths
+from utils.config import args
 from utils.packager import depends, clone, download
 
 import os
 
-PATH = paths()
+PATH = args()
 
 def packager(path: str = PATH,                    # source dir
              url: str = "https://mpr.makedeb.org",  # main url to clone

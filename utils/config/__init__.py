@@ -1,10 +1,15 @@
 import yaml
 
-def paths() -> dict:
+def args() -> dict:
   "get default paths from yaml file"
-  yaml_content = yaml.safe_load(open("utils/config/paths.yaml"))
+  yaml_content = yaml.safe_load(open("utils/config/string_args.yaml"))
 
   return {
-    "source": yaml_content["source"]
+    # --- paths ---
+    "source": yaml_content["source"],
+
+    # --- commands ---
+    "install": yaml_content["install"]
   }
+
   
