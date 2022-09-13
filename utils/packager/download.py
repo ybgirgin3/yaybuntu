@@ -8,7 +8,13 @@ ubnt_install = args()["install"]          # install command
 
 
 def _command_run(pkg):
-  subprocess.Popen(["sudo", "apt", "install", f"{pkg}"])
+  proc = subprocess.Popen(['sudo', 'apt', 'install', f'{pkg}'],
+                          stdin=subprocess.PIPE,
+                          stdout=subprocess.PIPE,
+                          stderr=subprocess.PIPE).communicate(input=b'password\n')
+  print("proc: ", proc)
+
+  #subprocess.Popen(["sudo", "apt", "install", f"{pkg}"])
   
 
 
