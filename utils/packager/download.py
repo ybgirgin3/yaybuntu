@@ -33,7 +33,7 @@ def download(deps: list, mkdeps: list):
 
     if mkdeps is not None:
       for mk in mkdeps:
-        _command_run(dep)
+        _command_run(mk)
 
   for dep in deps:
     isExists = is_installed.is_installed(dep)  # control if pkg is installed
