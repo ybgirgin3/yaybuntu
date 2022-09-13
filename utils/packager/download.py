@@ -22,7 +22,7 @@ def run_as_sudo(sudo_user=os.getlogin(),
       return subprocess.run(cmd_array, shell=shell, timeout=timeout)
 
     # run command
-    print("ret: ", sudo_args + cmd_str.split())
+    print("ret: ", sudo_args + cmd_str)
     r = run_cmd(sudo_args + cmd_str.split(), shell=shell, timeout=timeout)
     return r
 
