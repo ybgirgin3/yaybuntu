@@ -1,5 +1,4 @@
 import os
-import pty
 import subprocess
 from utils.logger import logger
 from utils.extra import is_installed
@@ -8,28 +7,24 @@ from utils.config import args
 ubnt_install = args()["install"]          # install command
 
 
-def _command_run(pkg):
-  cmd = "sudo apt install %s " % (pkg)
+def run_as_sudo(sudo_user=os.getlogin(),
+                cmd_str=None,
+                shell=False,
+                timeout=None):
 
-  def reader(fd):
-    return os.read(fd)
-  def writer(fd):
-    yield 'password'
-    yield ''
+    sudo_args = ["sudo", "-u", sudo_user]
 
-  pty.spawn(cmd, reader, writer)
+    def run_cmd(cmd_array, shell=False, timeout=None):
+      if shell:
+        return subprocess.run(" ".join(cmd_array), shell=shell, timeout=timeout)
 
-  
+      # https://docs.python.org/3/library/subprocess.html#subprocess.CompletedProcess
+      return subprocess.run(cmd_array, shell=shell, timeout=timeout)
 
+    # run command
+    r = run_cmd(sudo_args + cmd_str.split(), shell=shell, timeout=timeout)
+    return r
 
-  # proc = subprocess.Popen(['sudo', 'apt', 'install', f'{pkg}'],
-  #                         stdin=subprocess.PIPE,
-  #                         stdout=subprocess.PIPE,
-  #                         stderr=subprocess.PIPE).communicate(input=b'password\n')
-  # print("proc: ", proc)
-
-  #subprocess.Popen(["sudo", "apt", "install", f"{pkg}"])
- 
 
 def download(deps: list, mkdeps: list):
   "download deps"
@@ -44,13 +39,11 @@ def download(deps: list, mkdeps: list):
 
     # * install deps
     if deps is not None:
-      for dep in deps:
-        _command_run(dep)
+      run_as_sudo(cmd_str=deps)
 
 
     if mkdeps is not None:
-      for mk in mkdeps:
-        _command_run(mk)
+      run_as_sudo(cmd_str=mkdeps)
 
   for dep in deps:
     isExists = is_installed.is_installed(dep)  # control if pkg is installed
