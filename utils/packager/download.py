@@ -6,25 +6,30 @@ from utils.config import args
 
 ubnt_install = args()["install"]          # install command
 
+def run_command(pkg: list = []):
+    os.system(f"{ubnt_install} {pkg.split(" ")}")
 
-def run_as_sudo(sudo_user=os.getlogin(),
-                cmd_str:list =None,
-                shell=False,
-                timeout=None):
 
-    sudo_args = ["sudo", "-u", sudo_user]
 
-    def run_cmd(cmd_array, shell=False, timeout=None):
-      if shell:
-        return subprocess.run(" ".join(cmd_array), shell=shell, timeout=timeout)
 
-      # https://docs.python.org/3/library/subprocess.html#subprocess.CompletedProcess
-      return subprocess.run(cmd_array, shell=shell, timeout=timeout)
-
-    # run command
-    print("ret: ", sudo_args + cmd_str)
-    r = run_cmd(sudo_args + cmd_str.split(), shell=shell, timeout=timeout)
-    return r
+# def run_as_sudo(sudo_user=os.getlogin(),
+#                 cmd_str:list = [],
+#                 shell=False,
+#                 timeout=None):
+# 
+#     sudo_args = ["sudo", "-u", sudo_user]
+# 
+#     def run_cmd(cmd_array, shell=False, timeout=None):
+#       if shell:
+#         return subprocess.run(" ".join(cmd_array), shell=shell, timeout=timeout)
+# 
+#       # https://docs.python.org/3/library/subprocess.html#subprocess.CompletedProcess
+#       return subprocess.run(cmd_array, shell=shell, timeout=timeout)
+# 
+#     # run command
+#     print("ret: ", sudo_args + cmd_str)
+#     r = run_cmd(sudo_args + cmd_str.split(), shell=shell, timeout=timeout)
+#     return r
 
 
 def download(deps: list, mkdeps: list):
