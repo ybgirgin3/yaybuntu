@@ -6,7 +6,7 @@ from utils.config import args
 
 ubnt_install = args()["install"]          # install command
 
-def run_command(pkg: list = []):
+def run_as_sudo(pkg: list = []):
     os.system(f"{ubnt_install} {pkg.split(' ')}")
 
 
