@@ -2,7 +2,8 @@ from termcolor import colored
 
 
 levels = {
-  "info": "blue",
+  "info": "white",
+  "important": 'blue',
   "warning": "yellow",
   "danger": "red"
 }

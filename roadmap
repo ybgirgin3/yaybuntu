@@ -2,3 +2,5 @@ use makedeb for install and build packages
 control if installation failed or not
 queue dependencies and install them during main installation process
 
+while command runn
+

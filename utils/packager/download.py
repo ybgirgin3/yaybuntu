@@ -4,15 +4,19 @@ from utils.extra import is_installed
 from utils.config import args
 
 ubnt_install = args()["install"]          # install command
+arch_install = "yay -S"
 
-def run_as_sudo(pkg: list = []):
-    packages = " ".join(pkg)
-    #os.system(f"{ubnt_install} {packages}")
-    command = f"{ubnt_install} {packages}"
-    # BUG: while installation process running in silence mode
+def run_as_sudo(pkg: str):
+    pkg_str = " ".join(pkg)
+    command = f"{ubnt_install} {pkg_str}"
+    logger(f"::> installation package(s) named: {pkg}", 'important')
+    logger(command, 'info')
     process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
-    process.wait()
-    logger(f"ReturnCode for current process: {command}: {process.returncode}")
+    output, err = process.communicate()
+    if err is not None:
+        logger(f"Error while installation process: {err}", 'danger')
+    process_status = process.wait()
+    #logger(f"output: {output.decode('utf-8')}")
 
 
 
