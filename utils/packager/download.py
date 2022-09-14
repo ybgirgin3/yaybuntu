@@ -13,7 +13,7 @@ def run_as_sudo(pkg: list = []):
 
 
 # def run_as_sudo(sudo_user=os.getlogin(),
-#                 cmd_str:list = [],
+#                 pkg:list = [],
 #                 shell=False,
 #                 timeout=None):
 # 
@@ -27,8 +27,8 @@ def run_as_sudo(pkg: list = []):
 #       return subprocess.run(cmd_array, shell=shell, timeout=timeout)
 # 
 #     # run command
-#     print("ret: ", sudo_args + cmd_str)
-#     r = run_cmd(sudo_args + cmd_str.split(), shell=shell, timeout=timeout)
+#     print("ret: ", sudo_args + pkg)
+#     r = run_cmd(sudo_args + pkg.split(), shell=shell, timeout=timeout)
 #     return r
 
 
@@ -45,11 +45,11 @@ def download(deps: list, mkdeps: list):
 
     # * install deps
     if deps is not None:
-      run_as_sudo(cmd_str=deps)
+      run_as_sudo(pkg=deps)
 
 
     if mkdeps is not None:
-      run_as_sudo(cmd_str=mkdeps)
+      run_as_sudo(pkg=mkdeps)
 
   for dep in deps:
     isExists = is_installed.is_installed(dep)  # control if pkg is installed
