@@ -1,4 +1,5 @@
 import subprocess
+import os
 
 def install(package_path: str = '/path/to/package'):
     pkgfile_path = os.path.join(package_path, 'PKGBUILD')
