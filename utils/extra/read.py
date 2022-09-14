@@ -4,7 +4,8 @@ from collections import Counter
 
 def read(fp: str = '/path/to/file'):
   "read and extract information as a json"
-  content = open(fp, 'r').readlines()
+  print("current file path:", fp)
+  content = open(f'{fp}', 'r').readlines()
   content = [i.strip() for i in content]
 
   logger("make file parsing.. \npackage information details..\n")

@@ -1,6 +1,5 @@
+from utils.packager import depends, clone, download, install
 from utils.config import args
-from utils.packager import depends, clone, download
-
 import os
 
 PATH = args()
@@ -18,8 +17,9 @@ def packager(path: str = PATH,                    # source dir
     os.system(f"mkdir -p {_p}")
     cloned_path = clone.clone(url, pac, _p)  # start the clonning process
     deps, makedeps = depends.find_dep(cloned_path)  # find depends as str
-    cmd_status = download.download(deps, makedeps)
-    print("command status: ", cmd_status)
+    download.download(deps, makedeps)               # download packages using apt
+    install(_p)           # install package
+
 
 
     

@@ -11,15 +11,7 @@ def run_as_sudo(pkg: str):
     command = f"{ubnt_install} {pkg_str}"
     logger(f"::> installation package(s) named: {pkg}", 'important')
     logger(command, 'info')
-    #process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
-    # output, err = process.communicate()
-    # if err is not None:
-    #     logger(f"Error while installation process: {err}", 'danger')
-    # process_status = process.wait()
     subprocess.run(command.split())
-    #logger(f"output: {output.decode('utf-8')}")
-
-
 
 
 def download(deps: list, mkdeps: list):
@@ -29,6 +21,7 @@ def download(deps: list, mkdeps: list):
   
 
   def _download_proc(deps, mkdeps):
+    "carry packages to run as sudo command"
     deps = deps if len(deps) else None        # define none if len is 0
     mkdeps = mkdeps if len(mkdeps) else None  # define none if len is 0
 
@@ -45,11 +38,13 @@ def download(deps: list, mkdeps: list):
     isExists = is_installed.is_installed(dep)  # control if pkg is installed
     if not isExists and dep not in dep_installation_q:
       dep_installation_q.append(dep)
+    else: print(f"::> package named {dep} is already installed")
 
   for mk in mkdeps:
     isExists = is_installed.is_installed(mk)  # control if pkg is installed
     if not isExists and mk not in dep_installation_q:
       make_dep_installation_q.append(mk)
+    else: print(f"::> package named {mk} is already installed")
 
       
   _download_proc(dep_installation_q, make_dep_installation_q)
