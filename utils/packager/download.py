@@ -1,4 +1,3 @@
-import os
 import subprocess
 from utils.logger import logger
 from utils.extra import is_installed
@@ -8,7 +7,13 @@ ubnt_install = args()["install"]          # install command
 
 def run_as_sudo(pkg: list = []):
     packages = " ".join(pkg)
-    os.system(f"{ubnt_install} {packages}")
+    #os.system(f"{ubnt_install} {packages}")
+    command = f"{ubnt_install} {packages}"
+    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
+    process.wait()
+    logger(f"ReturnCode for current process: {command}: {process.returncode}")
+
+
 
 
 def download(deps: list, mkdeps: list):
