@@ -11,11 +11,12 @@ def run_as_sudo(pkg: str):
     command = f"{ubnt_install} {pkg_str}"
     logger(f"::> installation package(s) named: {pkg}", 'important')
     logger(command, 'info')
-    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
-    output, err = process.communicate()
-    if err is not None:
-        logger(f"Error while installation process: {err}", 'danger')
-    process_status = process.wait()
+    #process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
+    # output, err = process.communicate()
+    # if err is not None:
+    #     logger(f"Error while installation process: {err}", 'danger')
+    # process_status = process.wait()
+    subprocess.run(command.split())
     #logger(f"output: {output.decode('utf-8')}")
 
 
