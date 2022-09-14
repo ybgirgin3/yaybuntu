@@ -18,7 +18,7 @@ def packager(path: str = PATH,                    # source dir
     cloned_path = clone.clone(url, pac, _p)  # start the clonning process
     deps, makedeps = depends.find_dep(cloned_path)  # find depends as str
     download.download(deps, makedeps)               # download packages using apt
-    install(_p)           # install package
+    install.install(_p)           # install package
 
 
 

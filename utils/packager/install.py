@@ -1,4 +1,6 @@
-# shell-color-scripts-git
+import subprocess
+
 def install(package_path: str = '/path/to/package'):
-    print("package_path:", package_path)
+    #subprocess.run("makedeb I")
+    print("install here")
 
