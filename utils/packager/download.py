@@ -7,29 +7,8 @@ from utils.config import args
 ubnt_install = args()["install"]          # install command
 
 def run_as_sudo(pkg: list = []):
-    os.system(f"{ubnt_install} {pkg.split(' ')}")
-
-
-
-
-# def run_as_sudo(sudo_user=os.getlogin(),
-#                 pkg:list = [],
-#                 shell=False,
-#                 timeout=None):
-# 
-#     sudo_args = ["sudo", "-u", sudo_user]
-# 
-#     def run_cmd(cmd_array, shell=False, timeout=None):
-#       if shell:
-#         return subprocess.run(" ".join(cmd_array), shell=shell, timeout=timeout)
-# 
-#       # https://docs.python.org/3/library/subprocess.html#subprocess.CompletedProcess
-#       return subprocess.run(cmd_array, shell=shell, timeout=timeout)
-# 
-#     # run command
-#     print("ret: ", sudo_args + pkg)
-#     r = run_cmd(sudo_args + pkg.split(), shell=shell, timeout=timeout)
-#     return r
+    packages = " ".join(pkg)
+    os.system(f"{ubnt_install} {packages}")
 
 
 def download(deps: list, mkdeps: list):
