@@ -9,6 +9,7 @@ def run_as_sudo(pkg: list = []):
     packages = " ".join(pkg)
     #os.system(f"{ubnt_install} {packages}")
     command = f"{ubnt_install} {packages}"
+    # BUG: while installation process running in silence mode
     process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
     process.wait()
     logger(f"ReturnCode for current process: {command}: {process.returncode}")
