@@ -1,5 +1,4 @@
 from utils.logger import logger
-from collections import Counter
 
 
 def read(fp: str = '/path/to/file'):
@@ -13,13 +12,19 @@ def read(fp: str = '/path/to/file'):
   deps = dict()
 
   for line in content:
-    k, v = line.split("=")
-    k,v = k.strip(), v.strip()
-    if k in deps:
-      if not isinstance(deps[k], list):
-        deps[k] = []
-      deps[k].append(v)
-    else:
-      deps[k] = v
+    try:
+        k, v = line.split("=")
+        k, v = k.strip(), v.strip()
+        if k in deps:
+          if not isinstance(deps[k], list):
+            deps[k] = []
+            deps[k].append(v)
+        else:
+          deps[k] = v
+    except ValueError as e:
+        pass
 
+
+
+  print("deps", deps)
   return deps 

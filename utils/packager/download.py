@@ -6,7 +6,7 @@ from utils.config import args
 ubnt_install = args()["install"]          # install command
 arch_install = "yay -S"
 
-def run_as_sudo(pkg: str):
+def run_as_sudo(pkg: list):
     pkg_str = " ".join(pkg)
     command = f"{ubnt_install} {pkg_str}"
     logger(f"::> installation package(s) named: {pkg}", 'important')
