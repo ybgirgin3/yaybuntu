@@ -16,8 +16,14 @@ def packager(path: str = PATH,                    # source dir
     _p = f"{source_p}/{pac}"    # create dir query
     os.system(f"mkdir -p {_p}")
     cloned_path = clone.clone(url, pac, _p)  # start the clonning process
-    deps, makedeps = depends.find_dep(cloned_path)  # find depends as str
-    download.download(deps, makedeps)               # download packages using apt
+    try:
+        sp = pac.split("-")
+        if "bin" in sp:
+            install.install(_p)
+    except:
+        deps, makedeps = depends.find_dep(cloned_path)  # find depends as str
+        download.download(deps, makedeps)               # download packages using apt
+
     install.install(_p)           # install package
 
 

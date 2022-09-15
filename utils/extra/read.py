@@ -21,7 +21,7 @@ def read(fp: str = '/path/to/file'):
             deps[k].append(v)
         else:
           deps[k] = v
-    except ValueError as e:
+    except ValueError:
         pass
 
 
